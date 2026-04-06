@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Profile</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #eef2ff;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .profile-wrap { max-width: 600px; margin: 0 auto; }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #d6d6f0;
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .header-card {
+      display: flex; gap: 1.25rem; align-items: center;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      border: none; color: white;
+    }
+
+    .avatar {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; font-weight: 700; color: #ffffff;
+      border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0;
+    }
+
+    .name { font-size: 22px; font-weight: 700; color: #ffffff; }
+    .sub  { font-size: 14px; color: rgba(255,255,255,0.8); margin-top: 3px; }
+
+    .section-title {
+      font-size: 12px; font-weight: 700; color: #6366f1;
+      text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 10px;
+    }
+
+    .about-text { font-size: 15px; color: #444; line-height: 1.75; }
+
+    .tag-skill {
+      display: inline-block; background: #ede9fe; border: 1px solid #c4b5fd;
+      border-radius: 20px; padding: 4px 13px; font-size: 13px;
+      color: #5b21b6; margin: 3px 4px 3px 0; font-weight: 500;
+    }
+    .tag-hobby {
+      display: inline-block; background: #fce7f3; border: 1px solid #f9a8d4;
+      border-radius: 20px; padding: 4px 13px; font-size: 13px;
+      color: #9d174d; margin: 3px 4px 3px 0; font-weight: 500;
+    }
+
+    .link-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid #f0f0f8;
+      text-decoration: none; color: #1a1a1a;
+    }
+    .link-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .link-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0; font-weight: 700;
+    }
+    .icon-email    { background: #fef3c7; color: #92400e; }
+    .icon-linkedin { background: #dbeafe; color: #1d4ed8; font-size: 13px; }
+    .icon-github   { background: #f3f4f6; color: #111827; font-size: 12px; }
+    .icon-phone    { background: #dcfce7; color: #166534; }
+
+    .link-main  { font-size: 14px; color: #1a1a1a; }
+    .link-label { font-size: 12px; color: #999; margin-top: 1px; }
+
+    .fb-btn {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 2px;
+      background: #ffffff; color: #1d4ed8; border: 1px solid #bfdbfe;
+      border-radius: 8px; padding: 8px 16px; text-decoration: none;
+      cursor: pointer; transition: all 0.2s; font-family: 'Segoe UI', sans-serif;
+    }
+    .fb-btn:hover {
+      background: #eff6ff; border-color: #3b82f6;
+      transform: translateY(-1px); box-shadow: 0 3px 10px rgba(59,130,246,0.15);
+    }
+    .fb-btn-name { font-size: 13px; font-weight: 700; color: #1d4ed8; }
+    .fb-btn-sub  { font-size: 10px; color: #64748b; font-weight: 400; }
+
+    .footer {
+      text-align: center; font-size: 12px; color: #a0a0c0;
+      padding-top: 0.5rem; padding-bottom: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-wrap">
+
+    <div class="card header-card">
+      <div>
+        <div class="name">Pushpraj Singh</div>
+        <div class="sub">B.Tech Computer Science &middot; 2nd Year</div>
+        <div class="sub">Vellore Institute of Technology </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">About me</div>
+      <p class="about-text">
+        Hey! I'm a second year CS student who likes building stuff and figuring out how things work.
+        I spend most of my free time tinkering with side projects, binge-watching tech videos, and
+        occasionally touching grass. Still figuring out what I want to do — but enjoying the journey so far.
+      </p>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Skills</div>
+      <div>
+        <span class="tag-skill">Python</span>
+        <span class="tag-skill">HTML / CSS</span>
+        <span class="tag-skill">Java</span>
+        <span class="tag-skill">Javascript</span>
+        <span class="tag-skill">MySQL</span>
+      </div>
+      <div class="section-title" style="margin-top:1rem;">Hobbies</div>
+      <div>
+        <span class="tag-hobby">Gaming</span>
+        <span class="tag-hobby">Drawing</span>
+        <span class="tag-hobby">Cycling</span>
+        <span class="tag-hobby">Reading</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Contact &amp; links</div>
+ 
+      <a class="link-row" href="mailto:Pushpraj.singh2024@vitstudent.ac.in">
+        <div class="link-icon icon-email">✉</div>
+        <div>
+          <div class="link-main">Pushpraj.singh2024@vitstudent.ac.in</div>
+          <div class="link-label">Email</div>
+        </div>
+      </a>
+ 
+      <a class="link-row" href="tel:+919772456124">
+        <div class="link-icon icon-phone">📞</div>
+        <div>
+          <div class="link-main">+91 9772456124</div>
+          <div class="link-label">Phone</div>
+        </div>
+      </a>
+    </div>
+
+  
+    <div style="text-align:center; margin-bottom:1rem;">
+      <a class="fb-btn" href="fundbridge.html">
+        <span class="fb-btn-name">FundBridge</span>
+        <span class="fb-btn-sub">connect founders with 

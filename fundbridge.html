@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FundBridge — Connect. Fund. Build.</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --blue: #3b82f6;
+  --blue-light: #eff6ff;
+  --blue-dark: #2563eb;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: #e2e8f0;
+  --bg: #f8fafc;
+  --white: #ffffff;
+  --green: #22c55e;
+  --green-light: #f0fdf4;
+  --amber: #f59e0b;
+  --cyan: #06b6d4;
+  --purple: #8b5cf6;
+  --red: #ef4444;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+nav {
+  background: var(--white);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--text);
+  cursor: pointer;
+}
+.logo span { color: var(--blue); }
+
+.nav-links { display: flex; gap: 4px; align-items: center; }
+
+.nav-link {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13.5px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-link:hover,
+.nav-link.active { color: var(--blue); background: var(--blue-light); }
+
+.back-btn {
+  background: var(--white);
+  border: 1px solid #bfdbfe;
+  border-radius: 7px;
+  padding: 6px 14px;
+  margin-left: 8px;
+  cursor: pointer;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1d4ed8;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.back-btn:hover { background: var(--blue-light); }
+
+.hero-page {
+  background: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 80px 30px;
+  min-height: calc(100vh - 60px);
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--blue-light);
+  border: 1px solid #bfdbfe;
+  color: var(--blue);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 14px;
+  border-radius: 100px;
+  margin-bottom: 28px;
+}
+.hero-badge::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.hero-h1 {
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  color: var(--text);
+}
+.hero-h1 .accent { color: var(--blue); }
+
+.hero-p {
+  color: var(--muted);
+  font-size: 16px;
+  font-weight: 300;
+  max-width: 480px;
+  line-height: 1.8;
+  margin-bottom: 36px;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-primary:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+
+.hero-stats {
+  display: flex;
+  margin-top: 60px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.stat-item {
+  padding: 24px 40px;
+  text-align: center;
+  border-right: 1px solid var(--border);
+  flex: 1;
+}
+.stat-item:last-child { border-right: none; }
+.stat-val {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--blue);
+  display: block;
+}
+.stat-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.section-header { text-align: center; margin-bottom: 50px; }
+.section-tag {
+  display: inline-block;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.section-h2 {
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 700;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+.section-desc {
+  color: var(--muted);
+  font-size: 15px;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.how-page { padding: 70px 40px; background: var(--bg); }
+.how-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.step-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 24px;
+  transition: all 0.2s;
+}
+.step-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+  transform: translateY(-3px);
+}
+
+.step-num {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  line-height: 1;
+  margin-bottom: 14px;
+}
+.step-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+.step-h { font-weight: 600; font-size: 15px; margin-bottom: 8px; color: var(--text); }
+.step-p { color: var(--muted); font-size: 13.5px; line-height: 1.7; font-weight: 300; }
+
+.feat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--blue-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.deals-page { padding: 60px 40px; background: var(--bg); }
+.deals-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.filter-bar { display: flex; gap: 6px; flex-wrap: wrap; }
+
+.ftab {
+  background: var(--white);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 12.5px;
+  padding: 6px 16px;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.ftab:hover { border-color: var(--blue); color: var(--blue); }
+.ftab.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+.deals-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.deal-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 22px;
+  transition: all 0.2s;
+  position: relative;
+}
+.deal-card:hover {
+  border-color: var(--blue);
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.deal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.founder-wrap { display: flex; align-items: center; gap: 10px; }
+
+.av {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.founder-name { font-size: 13px; font-weight: 500; color: var(--text); }
+.founder-loc { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+.badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.badge-tech   { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
+.badge-agri   { background: #fffbeb; color: #d97706; border: 1px solid #fde68a; }
+.badge-health { background: #ecfeff; color: #0891b2; border: 1px solid #a5f3fc; }
+.badge-edu    { background: #f5f3ff; color: #7c3aed; border: 1px solid #ddd6fe; }
+.badge-fin    { background: #f0fdf4; color: #16a34a; border: 1px solid #bbf7d0; }
+
+.deal-title { font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--text); line-height: 1.4; }
+.deal-desc  { color: var(--muted); font-size: 12.5px; line-height: 1.65; margin-bottom: 16px; font-weight: 300; }
+
+.deal-nums {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.num-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px;
+}
+.nlabel { font-size: 9.5px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 3px; }
+.nval { font-size: 13px; font-weight: 700; color: var(--text); }
+.nval.amber { color: var(--amber); }
+.nval.cyan  { color: var(--cyan); }
+.nval.blue  { color: var(--blue); }
+
+.prog-wrap { margin-bottom: 14px; }
+.prog-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.prog-track { height: 5px; background: var(--border); border-radius: 10px; overflow: hidden; }
+.prog-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 10px;
+  transition: width 0.8s ease;
+}
+.prog-fill.funded { background: var(--green); }
+
+.deal-btns { display: flex; gap: 8px; }
+.dbtn-main {
+  flex: 1;
+  padding: 9px;
+  background: var(--blue-light);
+  color: var(--blue);
+  border: 1px solid #bfdbfe;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  transition: all 0.2s;
+}
+.dbtn-main:hover { background: var(--blue); color: #fff; }
+.dbtn-sec {
+  padding: 9px 14px;
+  background: transparent;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dbtn-sec:hover { border-color: var(--blue); color: var(--blue); }
+
+.new-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--green);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 100px;
+  text-transform: uppercase;
+}
+
+.pitch-page { padding: 60px 40px; background: var(--bg); }
+.pitch-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 50px;
+  max-width: 1000px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.form-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 32px;
+}
+.form-card h3 { font-weight: 700; font-size: 1.15rem; margin-bottom: 4px; color: var(--text); }
+.form-sub { color: var(--muted); font-size: 12.5px; margin-bottom: 24px; }
+
+.frow { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.fg { margin-bottom: 14px; }
+.fg label {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 6px;
+}
+.fg input,
+.fg select,
+.fg textarea {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: all 0.2s;
+}
+.fg input:focus,
+.fg select:focus,
+.fg textarea:focus {
+  border-color: var(--blue);
+  background: var(--white);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.fg textarea { resize: vertical; min-height: 90px; }
+
+.submit-btn {
+  width: 100%;
+  padding: 13px;
+  background: var(--blue);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 4px;
+}
+.submit-btn:hover { background: var(--blue-dark); transform: translateY(-1px); }
+
+.submitted-pitches h3 {
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 14px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.pitch-list { display: flex; flex-direction: column; gap: 10px; }
+
+.pitch-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.pitch-item-left .p-name { font-weight: 600; font-size: 14px; color: var(--text); }
+.pitch-item-left .p-meta { color: var(--muted); font-size: 12px; margin-top: 2px; }
+.pitch-item-right { text-align: right; }
+.pitch-ask { font-weight: 700; color: var(--amber); font-size: 15px; }
+.pitch-status {
+  font-size: 10.5px;
+  padding: 3px 10px;
+  border-radius: 100px;
+  background: #fffbeb;
+  color: var(--amber);
+  border: 1px solid #fde68a;
+  margin-top: 4px;
+  display: inline-block;
+}
+
+.stories-page { padding: 60px 40px; background: var(--bg); }
+.stories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.story-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.story-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green), #16a34a);
+}
+.story-card:hover {
+  border-color: var(--green);
+  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.12);
+  transform: translateY(-4px);
+}
+
+.story-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+.funded-stamp {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--green-light);
+  border: 1px solid #bbf7d0;
+  color: #16a34a;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.story-sector-badge {
+  font-size: 10.5px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.story-founder-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.story-av {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+.story-founder-name { font-size: 15px; font-weight: 700; color: var(--text); }
+.story-startup-name { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+.story-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 10px; line-height: 1.45; }
+.story-desc  { font-size: 13px; color: var(--muted); line-height: 1.7; font-weight: 300; margin-bottom: 20px; }
+
+.story-numbers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.story-num-box {
+  background: var(--green-light);
+  border: 1px solid #bbf7d0;
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+.story-num-label {
+  font-size: 9px;
+  color: #16a34a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 3px;
+  font-weight: 600;
+}
+.story-num-val { font-size: 14px; font-weight: 700; color: #15803d; }
+
+.story-quote {
+  background: var(--bg);
+  border-left: 3px solid var(--green);
+  border-radius: 0 8px 8px 0;
+  padding: 12px 16px;
+  font-size: 12.5px;
+  color: var(--muted);
+  font-style: italic;
+  line-height: 1.65;
+}
+.story-funded-date { font-size: 11px; color: var(--muted); margin-top: 14px; text-align: right; }
+
+.stories-empty {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--muted);
+  max-width: 400px;
+  margin: 0 auto;
+}
+.stories-empty .ei { font-size: 3rem; margin-bottom: 16px; }
+.stories-empty h3 { font-size: 1.1rem; font-weight: 600; color: var(--text); margin-bottom: 8px; }
+.stories-empty p  { font-size: 13.5px; line-height: 1.7; }
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+
+.modal {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  width: 92%;
+  max-width: 440px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+}
+.modal h3 { font-weight: 700; font-size: 1.1rem; margin-bottom: 6px; color: var(--text); }
+.modal .msub { color: var(--muted); font-size: 13px; margin-bottom: 22px; }
+
+.amt-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.amt-btn {
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.amt-btn:hover { border-color: var(--blue); color: var(--blue); }
+.amt-btn.active { background: var(--blue-light); border-color: var(--blue); color: var(--blue); }
+
+.modal input {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  outline: none;
+  margin-bottom: 18px;
+  transition: all 0.2s;
+}
+.modal input:focus { border-color: var(--blue); }
+
+.modal-btns { display: flex; gap: 10px; }
+.mbtn-cancel {
+  flex: 1;
+  padding: 11px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mbtn-cancel:hover { border-color: var(--muted); color: var(--text); }
+.mbtn-confirm {
+  flex: 1;
+  padding: 11px;
+  background: var(--blue);
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.mbtn-confirm:hover { background: var(--blue-dark); }
+
+.toast-wrap {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1000;
+  pointer-events: none;
+}
+.toast {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--blue);
+  color: var(--text);
+  padding: 13px 18px;
+  border-radius: 10px;
+  font-size: 13px;
+  max-width: 320px;
+  pointer-events: auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  animation: toastIn 0.3s ease forwards;
+}
+@keyframes toastIn  { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes toastOut { to   { opacity: 0; transform: translateX(40px); } }
+.toast.out { animation: toastOut 0.3s ease forwards; }
+
+footer {
+  background: var(--white);
+  border-top: 1px solid var(--border);
+  padding: 28px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fcopy { color: var(--muted); font-size: 12px; }
+
+.empty-state { text-align: center; padding: 50px 20px; color: var(--muted); }
+.empty-state .ei { font-size: 2.5rem; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+@media (max-width: 768px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .how-grid,
+  .pitch-grid { grid-template-columns: 1fr; }
+  .deals-grid,
+  .stories-grid { grid-template-columns: 1fr; }
+  .frow { grid-template-columns: 1fr; }
+  .hero-stats { flex-direction: column; border: none; }
+  .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+  .how-page,
+  .deals-page,
+  .pitch-page,
+  .stories-page { padding: 40px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="logo" onclick="showPage('home')">Fund<span>Bridge</span></span>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="showPage('home')"    data-page="home">Home</button>
+    <button class="nav-link"        onclick="showPage('how')"     data-page="how">How It Works</button>
+    <button class="nav-link"        onclick="showPage('deals')"   data-page="deals">Deals</button>
+    <button class="nav-link"        onclick="showPage('pitch')"   data-page="pitch">Submit Pitch</button>
+    <button class="nav-link"        onclick="showPage('stories')" data-page="stories">Success Stories</button>
+  </div>
+  <a class="back-btn" href="profile.html">&#8592; My Profile</a>
+</nav>
+
+<div class="page active" id="page-home">
+  <div class="hero-page">
+    <div class="hero-badge">Live — 6,800+ investors active now</div>
+    <h1 class="hero-h1">Bridge the gap between<br><span class="accent">ideas</span> and capital.</h1>
+    <p class="hero-p">FundBridge connects founders with investors who back real potential. No charity. Just funding that moves businesses forward.</p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="showPage('deals')">Browse Live Deals &rarr;</button>
+      <button class="btn-outline" onclick="showPage('pitch')">Submit Your Pitch</button>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item"><span class="stat-val" id="stat-deployed">&#8377;47Cr</span><div class="stat-label">Total Deployed</div></div>
+      <div class="stat-item"><span class="stat-val" id="stat-deals">1,240</span><div class="stat-label">Deals Funded</div></div>
+      <div class="stat-item"><span class="stat-val" id="stat-investors">6,800+</span><div class="stat-label">Active Investors</div></div>
+      <div class="stat-item"><span class="stat-val">94%</span><div class="stat-label">Deal Success Rate</div></div>
+    </div>
+  </div>
+  <footer>
+    <div class="fcopy">&copy; 2025 FundBridge. Connect. Fund. Build.</div>
+  </footer>
+</div>
+
+<div class="page" id="page-how">
+  <div class="how-page">
+    <div class="section-header">
+      <div class="section-tag">Process</div>
+      <h2 class="section-h2">How FundBridge Works</h2>
+      <p class="section-desc">Three steps — from idea to funded venture.</p>
+    </div>
+    <div class="how-grid">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <div class="step-icon">&#128640;</div>
+        <div class="step-h">Submit Your Pitch</div>
+        <p class="step-p">Founders fill in a simple form — startup name, sector, funding ask, and a short description. No fees, no gatekeepers, no waiting.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <div class="step-icon">&#9889;</div>
+        <div class="step-h">Go Live Instantly</div>
+        <p class="step-p">Your deal appears on the Deals board the moment you submit — visible to all investors on the platform right away.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <div class="step-icon">&#128176;</div>
+        <div class="step-h">Receive Investments</div>
+        <p class="step-p">Investors browse live deals and invest directly. Once fully funded, your deal moves to the Success Stories hall of fame.</p>
+      </div>
+    </div>
+    <div style="max-width:960px; margin:50px auto 0; display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="step-card" style="display:flex; gap:16px; align-items:flex-start;">
+        <div class="feat-icon">&#9889;</div>
+        <div><div class="step-h">Instant Listing</div><p class="step-p">Submit your pitch and it goes live immediately — no waiting, no approval needed.</p></div>
+      </div>
+      <div class="step-card" style="display:flex; gap:16px; align-items:flex-start;">
+        <div class="feat-icon">&#128202;</div>
+        <div><div class="step-h">Live Deal Dashboard</div><p class="step-p">Track investor payments and funding progress in real time as they come in.</p></div>
+      </div>
+      <div class="step-card" style="display:flex; gap:16px; align-items:flex-start;">
+        <div class="feat-icon">&#9989;</div>
+        <div><div class="step-h">Auto Success Story</div><p class="step-p">When your deal hits 100%, it automatically moves to the Success Stories page.</p></div>
+      </div>
+      <div class="step-card" style="display:flex; gap:16px; align-items:flex-start;">
+        <div class="feat-icon">&#129309;</div>
+        <div><div class="step-h">Zero Upfront Fee</div><p class="step-p">List your deal for free. We only earn a small success fee once your round is fully funded.</p></div>
+      </div>
+    </div>
+    <div style="text-align:center; margin-top:50px;">
+      <button class="btn-primary" onclick="showPage('pitch')">Start Your Pitch &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-deals">
+  <div class="deals-page">
+    <div class="section-header">
+      <div class="section-tag">Live Deals</div>
+      <h2 class="section-h2">Open for Investment</h2>
+      <p class="section-desc">When a deal hits its target, it automatically moves to Success Stories.</p>
+    </div>
+    <div class="deals-toolbar">
+      <div class="filter-bar">
+        <button class="ftab active" onclick="filterDeal(this,'all')">All Deals</button>
+        <button class="ftab" onclick="filterDeal(this,'tech')">Tech</button>
+        <button class="ftab" onclick="filterDeal(this,'agri')">Agri</button>
+        <button class="ftab" onclick="filterDeal(this,'health')">Health</button>
+        <button class="ftab" onclick="filterDeal(this,'edu')">EdTech</button>
+        <button class="ftab" onclick="filterDeal(this,'fin')">FinTech</button>
+      </div>
+      <span id="deals-count" style="font-size:13px; color:var(--muted);"></span>
+    </div>
+    <div class="deals-grid" id="deals-grid"></div>
+  </div>
+</div>
+
+<div class="page" id="page-pitch">
+  <div class="pitch-page">
+    <div class="section-header">
+      <div class="section-tag">For Founders</div>
+      <h2 class="section-h2">Ready to Cross the Bridge?</h2>
+      <p class="section-desc">Submit your pitch and go live on the Deals board immediately.</p>
+    </div>
+    <div class="pitch-grid">
+      <div>
+        <div class="submitted-pitches">
+          <h3>Recent Submissions</h3>
+          <div class="pitch-list" id="pitch-list">
+            <div class="empty-state">
+              <div class="ei">&#128236;</div>
+              <p>Submitted pitches will appear here instantly</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-card">
+        <h3>Submit Your Pitch</h3>
+        <p class="form-sub">Takes 5 minutes. Goes live on Deals instantly.</p>
+        <div class="frow">
+          <div class="fg"><label>Your Name</label><input type="text" id="p-name" placeholder="Full name"></div>
+          <div class="fg"><label>Startup Name</label><input type="text" id="p-startup" placeholder="Your startup"></div>
+        </div>
+        <div class="fg"><label>Pitch Title</label><input type="text" id="p-title" placeholder="One-line description of what you do"></div>
+        <div class="frow">
+          <div class="fg">
+            <label>Sector</label>
+            <select id="p-sector">
+              <option value="tech">Technology</option>
+              <option value="agri">Agriculture</option>
+              <option value="health">Healthcare</option>
+              <option value="edu">Education</option>
+              <option value="fin">FinTech</option>
+              <option value="climate">Climate</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="fg"><label>Funding Ask (&#8377;)</label><input type="text" id="p-ask" placeholder="e.g. 25,00,000"></div>
+        </div>
+        <div class="fg"><label>Problem &amp; Solution</label><textarea id="p-desc" placeholder="What problem are you solving?"></textarea></div>
+        <button class="submit-btn" onclick="submitPitch()">Submit Pitch &rarr;</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="page" id="page-stories">
+  <div class="stories-page">
+    <div class="section-header">
+      <div class="section-tag">&#127942; Hall of Fame</div>
+      <h2 class="section-h2">Success Stories</h2>
+      <p class="section-desc">Every deal here hit its target. These founders crossed the bridge — and changed their industries.</p>
+    </div>
+    <div class="stories-grid" id="stories-grid"></div>
+  </div>
+  <footer>
+    <div class="fcopy">&copy; 2025 FundBridge. Connect. Fund. Build.</div>
+  </footer>
+</div>
+
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <h3>Invest in <span id="modalName" style="color:var(--blue)"></span></h3>
+    <p class="msub">Select your ticket size or enter a custom amount.</p>
+    <div class="amt-grid">
+      <button class="amt-btn" onclick="selAmt(this,'50000')">&#8377;50K</button>
+      <button class="amt-btn" onclick="selAmt(this,'100000')">&#8377;1L</button>
+      <button class="amt-btn" onclick="selAmt(this,'250000')">&#8377;2.5L</button>
+      <button class="amt-btn" onclick="selAmt(this,'500000')">&#8377;5L</button>
+      <button class="amt-btn" onclick="selAmt(this,'1000000')">&#8377;10L</button>
+      <button class="amt-btn" onclick="selAmt(this,'2500000')">&#8377;25L</button>
+    </div>
+    <input type="text" id="customAmt" placeholder="Or enter custom amount (&#8377;)">
+    <div class="modal-btns">
+      <button class="mbtn-cancel"  onclick="closeModal()">Cancel</button>
+      <button class="mbtn-confirm" onclick="confirmInvest()">Register Interest &rarr;</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<script>
+let selAmount = '';
+let curDeal = '';
+let curDealIndex = -1;
+let totalDeployed = 4700;
+let totalFunded = 1240;
+let totalInvestors = 6800;
+let currentFilter = 'all';
+
+const deals = [
+  {
+    id: 'LogiSense',
+    founder: 'Ravi Kumar',
+    loc: 'Bengaluru',
+    initials: 'RK',
+    color: '#3b82f6',
+    cat: 'tech',
+    badge: 'Tech',
+    badgeClass: 'badge-tech',
+    title: 'LogiSense \u2014 AI-Powered Last-Mile Logistics for Tier-3 Cities',
+    desc: "Optimising delivery routes and fleet management for Bharat's underserved small-town markets. 40% cost reduction in pilots.",
+    seeking: 4000000,
+    raised: 2800000,
+    investors: 42
+  },
+  {
+    id: 'KrishiSat',
+    founder: 'Priya Sharma',
+    loc: 'Pune',
+    initials: 'PS',
+    color: '#f59e0b',
+    cat: 'agri',
+    badge: 'Agri',
+    badgeClass: 'badge-agri',
+    title: 'KrishiSat \u2014 Satellite Crop Intelligence for Small Farmers',
+    desc: 'Affordable satellite imagery and soil analytics delivered via SMS for farmers without smartphones. 3,000+ farmers in beta.',
+    seeking: 6000000,
+    raised: 1800000,
+    investors: 19
+  },
+  {
+    id: 'DiagnoQ',
+    founder: 'Ananya Menon',
+    loc: 'Chennai',
+    initials: 'AM',
+    color: '#06b6d4',
+    cat: 'health',
+    badge: 'Health',
+    badgeClass: 'badge-health',
+    title: 'DiagnoQ \u2014 Rapid Diagnostic Kits for Rural Primary Care',
+    desc: 'Low-cost, lab-free diagnostic strips for malaria, dengue, and anaemia \u2014 deployable by any ASHA worker in under 3 minutes.',
+    seeking: 2500000,
+    raised: 2200000,
+    investors: 58
+  },
+  {
+    id: 'SkillArch',
+    founder: 'Vijay Thakur',
+    loc: 'Hyderabad',
+    initials: 'VT',
+    color: '#8b5cf6',
+    cat: 'edu',
+    badge: 'EdTech',
+    badgeClass: 'badge-edu',
+    title: 'SkillArch \u2014 Vocational Micro-Credentials for Blue-Collar Workers',
+    desc: '10-minute mobile-first skill modules with verified certificates for electricians, plumbers, and mechanics seeking better jobs.',
+    seeking: 3000000,
+    raised: 900000,
+    investors: 11
+  },
+  {
+    id: 'HarvestCredit',
+    founder: 'Neha Rao',
+    loc: 'Coimbatore',
+    initials: 'NR',
+    color: '#16a34a',
+    cat: 'fin',
+    badge: 'FinTech',
+    badgeClass: 'badge-fin',
+    title: 'HarvestCredit \u2014 Seasonal Working Capital for Tenant Farmers',
+    desc: 'Instant micro-loans backed by crop yield data \u2014 disbursed via UPI in 4 hours. Zero physical branch visits required.',
+    seeking: 8000000,
+    raised: 5500000,
+    investors: 73
+  },
+  {
+    id: 'BuildStack',
+    founder: 'Sameer Ansari',
+    loc: 'Mumbai',
+    initials: 'SA',
+    color: '#ef4444',
+    cat: 'tech',
+    badge: 'Tech',
+    badgeClass: 'badge-tech',
+    title: 'BuildStack \u2014 Verified Contractor Marketplace for Housing Projects',
+    desc: 'Connects homeowners with rated, background-checked local contractors. Escrow-backed payments and live project dashboards.',
+    seeking: 5000000,
+    raised: 3800000,
+    investors: 36
+  }
+];
+
+const successStories = [
+  {
+    id: 'AgroVision',
+    founder: 'Kiran Nair',
+    loc: 'Kochi',
+    initials: 'KN',
+    color: '#f59e0b',
+    cat: 'agri',
+    badge: 'Agri',
+    badgeClass: 'badge-agri',
+    title: 'AgroVision \u2014 Drone-based Crop Health Monitoring',
+    desc: 'Used computer vision to detect crop disease early and reduce pesticide use by 60%. Now serving 12,000+ farmers across Kerala and Tamil Nadu.',
+    seeking: 3000000,
+    raised: 3000000,
+    investors: 47,
+    quote: '\u201cFundBridge gave us the runway to prove our model. We closed our round in 19 days.\u201d',
+    founderQuote: '\u2014 Kiran Nair, CEO',
+    fundedDate: 'Funded March 2025'
+  },
+  {
+    id: 'MediRoute',
+    founder: 'Sneha Pillai',
+    loc: 'Bangalore',
+    initials: 'SP',
+    color: '#06b6d4',
+    cat: 'health',
+    badge: 'Health',
+    badgeClass: 'badge-health',
+    title: 'MediRoute \u2014 Last-Mile Medicine Delivery for Rural Clinics',
+    desc: 'Partnered with 200+ rural pharmacies to ensure same-day delivery of critical medicines. Expanded to 4 states after closing their round.',
+    seeking: 2000000,
+    raised: 2000000,
+    investors: 34,
+    quote: '\u201cWe went from zero to 34 investors in under a month. The platform just works.\u201d',
+    founderQuote: '\u2014 Sneha Pillai, Co-founder',
+    fundedDate: 'Funded January 2025'
+  },
+  {
+    id: 'EduSpark',
+    founder: 'Rahul Mehta',
+    loc: 'Jaipur',
+    initials: 'RM',
+    color: '#8b5cf6',
+    cat: 'edu',
+    badge: 'EdTech',
+    badgeClass: 'badge-edu',
+    title: 'EduSpark \u2014 Gamified Learning for Government School Students',
+    desc: 'Built offline-first learning apps used by 80,000+ students in low-connectivity areas. Partnered with 3 state governments post-funding.',
+    seeking: 1500000,
+    raised: 1500000,
+    investors: 22,
+    quote: '\u201cThe simplicity of FundBridge let us focus on building, not fundraising.\u201d',
+    founderQuote: '\u2014 Rahul Mehta, Founder',
+    fundedDate: 'Funded November 2024'
+  }
+];
+
+const submittedPitches = [];
+
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.toggle('active', l.dataset.page === name));
+  window.scrollTo(0, 0);
+  if (name === 'deals')   renderDeals(currentFilter);
+  if (name === 'pitch')   renderPitchList();
+  if (name === 'stories') renderStories();
+}
+
+function fmtINR(n) {
+  if (n >= 10000000) return '\u20b9' + (n / 10000000).toFixed(1) + 'Cr';
+  if (n >= 100000)   return '\u20b9' + Math.round(n / 100000) + 'L';
+  if (n >= 1000)     return '\u20b9' + Math.round(n / 1000) + 'K';
+  return '\u20b9' + n;
+}
+
+function renderDeals(filter) {
+  currentFilter = filter || 'all';
+  const grid = document.getElementById('deals-grid');
+  const visible = deals.filter(d => currentFilter === 'all' || d.cat === currentFilter);
+  document.getElementById('deals-count').textContent = visible.length + ' deal' + (visible.length !== 1 ? 's' : '') + ' found';
+
+  if (!visible.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="ei">\ud83d\udd0d</div><p>No deals in this category right now.</p></div>';
+    return;
+  }
+
+  grid.innerHTML = visible.map(d => {
+    const pct = Math.min(100, Math.round((d.raised / d.seeking) * 100));
+    const isNew = d._isNew ? '<div class="new-badge">NEW</div>' : '';
+    return `<div class="deal-card" id="card-${d.id}">${isNew}
+      <div class="deal-head">
+        <div class="founder-wrap">
+          <div class="av" style="background:${d.color}">${d.initials}</div>
+          <div>
+            <div class="founder-name">${d.founder}</div>
+            <div class="founder-loc">${d.loc}</div>
+          </div>
+        </div>
+        <span class="badge ${d.badgeClass}">${d.badge}</span>
+      </div>
+      <div class="deal-title">${d.title}</div>
+      <p class="deal-desc">${d.desc}</p>
+      <div class="deal-nums">
+        <div class="num-box"><div class="nlabel">Seeking</div><div class="nval amber">${fmtINR(d.seeking)}</div></div>
+        <div class="num-box"><div class="nlabel">Raised</div><div class="nval cyan" id="${d.id}-raised">${fmtINR(d.raised)}</div></div>
+        <div class="num-box"><div class="nlabel">Investors</div><div class="nval blue" id="${d.id}-investors">${d.investors}</div></div>
+      </div>
+      <div class="prog-wrap">
+        <div class="prog-labels">
+          <span id="${d.id}-raised-label">${fmtINR(d.raised)} raised</span>
+          <span id="${d.id}-pct">${pct}%</span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" id="${d.id}-bar" style="width:${pct}%"></div></div>
+      </div>
+      <div class="deal-btns">
+        <button class="dbtn-main" onclick="openModal('${d.id}',${deals.indexOf(d)})">Express Interest</button>
+        <button class="dbtn-sec"  onclick="showToast('\ud83d\udcc4 Opening deal room for ${d.id}...','info')">\ud83d\udcc4 Deck</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function filterDeal(btn, cat) {
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  renderDeals(cat);
+}
+
+function renderStories() {
+  const grid = document.getElementById('stories-grid');
+
+  if (!successStories.length) {
+    grid.innerHTML = `<div class="stories-empty" style="grid-column:1/-1">
+      <div class="ei">\ud83c\udf31</div>
+      <h3>No success stories yet</h3>
+      <p>When a deal on the Deals board gets fully funded, it automatically moves here. Be the first to make it happen!</p>
+      <button class="btn-primary" onclick="showPage('deals')" style="margin-top:20px;">Browse Live Deals \u2192</button>
+    </div>`;
+    return;
+  }
+
+  grid.innerHTML = successStories.map(s => `
+    <div class="story-card">
+      <div class="story-badge-row">
+        <div class="funded-stamp">\u2705 Fully Funded</div>
+        <span class="story-sector-badge ${s.badgeClass}">${s.badge}</span>
+      </div>
+      <div class="story-founder-row">
+        <div class="story-av" style="background:${s.color}">${s.initials}</div>
+        <div>
+          <div class="story-founder-name">${s.founder}</div>
+          <div class="story-startup-name">${s.id} \u00b7 ${s.loc}</div>
+        </div>
+      </div>
+      <div class="story-title">${s.title}</div>
+      <p class="story-desc">${s.desc}</p>
+      <div class="story-numbers">
+        <div class="story-num-box"><div class="story-num-label">Raised</div><div class="story-num-val">${fmtINR(s.raised)}</div></div>
+        <div class="story-num-box"><div class="story-num-label">Investors</div><div class="story-num-val">${s.investors}</div></div>
+        <div class="story-num-box"><div class="story-num-label">Target Hit</div><div class="story-num-val">100%</div></div>
+      </div>
+      <div class="story-quote">${s.quote}<br><span style="font-style:normal; font-weight:600; font-size:11px; color:#16a34a;">${s.founderQuote}</span></div>
+      <div class="story-funded-date">\ud83d\udcc5 ${s.fundedDate}</div>
+    </div>`).join('');
+}
+
+function openModal(name, idx) {
+  curDeal = name;
+  curDealIndex = idx !== undefined ? idx : deals.findIndex(d => d.id === name);
+  document.getElementById('modalName').textContent = name;
+  document.getElementById('modal').classList.add('open');
+  document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('customAmt').value = '';
+  selAmount = '';
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('open');
+}
+
+function selAmt(btn, amt) {
+  document.querySelectorAll('.amt-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  selAmount = amt;
+  document.getElementById('customAmt').value = '';
+}
+
+function confirmInvest() {
+  const custom = document.getElementById('customAmt').value.replace(/[^0-9]/g, '');
+  const amount = parseInt(custom || selAmount, 10);
+  if (!amount || amount <= 0) { showToast('Please select or enter a ticket size.', 'warn'); return; }
+
+  closeModal();
+  const deal = deals[curDealIndex];
+  if (!deal) return;
+
+  deal.raised += amount;
+  deal.investors += 1;
+  if (deal.raised > deal.seeking) deal.raised = deal.seeking;
+
+  const pct = Math.round((deal.raised / deal.seeking) * 100);
+
+  const raisedEl      = document.getElementById(deal.id + '-raised');
+  const raisedLabelEl = document.getElementById(deal.id + '-raised-label');
+  const pctEl         = document.getElementById(deal.id + '-pct');
+  const barEl         = document.getElementById(deal.id + '-bar');
+  const invEl         = document.getElementById(deal.id + '-investors');
+
+  if (raisedEl)      raisedEl.textContent      = fmtINR(deal.raised);
+  if (raisedLabelEl) raisedLabelEl.textContent  = fmtINR(deal.raised) + ' raised';
+  if (pctEl)         pctEl.textContent          = pct + '%';
+  if (barEl)         { barEl.style.width = pct + '%'; if (pct >= 100) barEl.classList.add('funded'); }
+  if (invEl)         invEl.textContent           = deal.investors;
+
+  totalDeployed  += Math.round(amount / 100000);
+  totalInvestors += 1;
+  updateStats();
+  showToast('\u2705 Payment of ' + fmtINR(amount) + ' to ' + curDeal + ' successful!', 'success');
+
+  if (deal.raised >= deal.seeking) {
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    const d = new Date();
+    const fundedDate = 'Funded ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const quotes = [
+      '\u201cFundBridge made our fundraising journey seamless. We hit our target faster than we ever imagined.\u201d',
+      '\u201cFrom pitch to fully funded \u2014 FundBridge connected us with the right investors at the right time.\u201d',
+      '\u201cThe platform is simple, powerful, and actually works. We couldn\u2019t be more grateful.\u201d',
+      '\u201cOur investors came from across India. FundBridge bridged every gap for us.\u201d'
+    ];
+
+    successStories.unshift({
+      id: deal.id,
+      founder: deal.founder,
+      loc: deal.loc,
+      initials: deal.initials,
+      color: deal.color,
+      cat: deal.cat,
+      badge: deal.badge,
+      badgeClass: deal.badgeClass,
+      title: deal.title,
+      desc: deal.desc,
+      seeking: deal.seeking,
+      raised: deal.raised,
+      investors: deal.investors,
+      quote: quotes[Math.floor(Math.random() * quotes.length)],
+      founderQuote: '\u2014 ' + deal.founder + ', Founder',
+      fundedDate: fundedDate
+    });
+
+    const card = document.getElementById('card-' + deal.id);
+    if (card) {
+      card.style.transition = 'all 0.6s ease';
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.85)';
+    }
+
+    const idx = deals.findIndex(d => d.id === deal.id);
+    if (idx !== -1) deals.splice(idx, 1);
+
+    showToast('\ud83c\udf89 ' + deal.id + ' is fully funded! Moving to Success Stories...', 'success');
+    setTimeout(() => {
+      showPage('stories');
+      showToast('\ud83c\udfc6 ' + deal.id + ' just joined the Success Stories hall of fame!', 'success');
+    }, 1200);
+  }
+}
+
+function submitPitch() {
+  const name    = document.getElementById('p-name').value.trim();
+  const startup = document.getElementById('p-startup').value.trim();
+  const title   = document.getElementById('p-title').value.trim();
+  const sector  = document.getElementById('p-sector').value;
+  const ask     = document.getElementById('p-ask').value.trim();
+  const desc    = document.getElementById('p-desc').value.trim();
+
+  if (!name || !startup || !title || !ask) { showToast('Please fill in all required fields.', 'warn'); return; }
+
+  const sectorColors = {
+    tech: '#3b82f6', agri: '#f59e0b', health: '#06b6d4',
+    edu: '#8b5cf6', fin: '#22c55e', climate: '#10b981', other: '#64748b'
+  };
+  const sectorBadges = {
+    tech: 'Tech', agri: 'Agri', health: 'Health',
+    edu: 'EdTech', fin: 'FinTech', climate: 'Climate', other: 'Other'
+  };
+  const sectorBadgeClass = {
+    tech: 'badge-tech', agri: 'badge-agri', health: 'badge-health',
+    edu: 'badge-edu', fin: 'badge-fin', climate: 'badge-fin', other: 'badge-tech'
+  };
+
+  const initials = name.split(' ').map(w => w[0]).join('').substring(0, 2).toUpperCase();
+  const askNum   = parseInt(ask.replace(/[^0-9]/g, ''), 10) || 0;
+
+  deals.unshift({
+    id: startup.replace(/\s+/g, ''),
+    founder: name,
+    loc: 'India',
+    initials,
+    color: sectorColors[sector] || '#3b82f6',
+    cat: sector,
+    badge: sectorBadges[sector] || 'Other',
+    badgeClass: sectorBadgeClass[sector] || 'badge-tech',
+    title: startup + ' \u2014 ' + title,
+    desc: desc || 'A newly listed deal \u2014 open for investor interest.',
+    seeking: askNum,
+    raised: 0,
+    investors: 0,
+    _isNew: true
+  });
+
+  submittedPitches.unshift({ name, startup, title, sector, ask, desc, time: new Date() });
+  renderPitchList();
+  totalFunded += 1;
+  updateStats();
+
+  ['p-name', 'p-startup', 'p-title', 'p-ask', 'p-desc'].forEach(id => document.getElementById(id).value = '');
+  showToast('\ud83d\ude80 ' + startup + ' is now live in Deals! Taking you there...', 'success');
+  setTimeout(() => showPage('deals'), 1200);
+}
+
+function renderPitchList() {
+  const list = document.getElementById('pitch-list');
+  if (!list) return;
+
+  if (!submittedPitches.length) {
+    list.innerHTML = '<div class="empty-state"><div class="ei">\ud83d\udce4</div><p>Submitted pitches will appear here instantly</p></div>';
+    return;
+  }
+
+  const sectorLabels = {
+    tech: 'Technology', agri: 'Agriculture', health: 'Healthcare',
+    edu: 'Education', fin: 'FinTech', climate: 'Climate', other: 'Other'
+  };
+
+  list.innerHTML = submittedPitches.map(p => `
+    <div class="pitch-item">
+      <div class="pitch-item-left">
+        <div class="p-name">${p.startup}</div>
+        <div class="p-meta">${p.name} \u00b7 ${sectorLabels[p.sector] || p.sector}</div>
+      </div>
+      <div class="pitch-item-right">
+        <div class="pitch-ask">\u20b9${p.ask}</div>
+        <div class="pitch-status" style="background:#f0fdf4; color:#16a34a; border:1px solid #bbf7d0;">\u2705 Live in Deals</div>
+      </div>
+    </div>`).join('');
+}
+
+function updateStats() {
+  const dep = document.getElementById('stat-deployed');
+  const inv = document.getElementById('stat-investors');
+  const dls = document.getElementById('stat-deals');
+  if (dep) dep.textContent = totalDeployed >= 10000 ? '\u20b9' + (totalDeployed / 100).toFixed(1) + 'Cr' : '\u20b9' + totalDeployed + 'L';
+  if (inv) inv.textContent = totalInvestors.toLocaleString('en-IN') + '+';
+  if (dls) dls.textContent = totalFunded.toLocaleString('en-IN');
+}
+
+function showToast(msg, type) {
+  const wrap = document.getElementById('toast-wrap');
+  const t = document.createElement('div');
+  t.className = 'toast';
+  const colors = { success: 'var(--green)', warn: 'var(--amber)', info: 'var(--blue)' };
+  t.style.borderLeftColor = colors[type] || 'var(--blue)';
+  t.textContent = msg;
+  wrap.appendChild(t);
+  setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 300); }, 4000);
+}
+
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+renderDeals();
+renderStories();
+</script>
+</body>
+</html>
